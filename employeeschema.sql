@@ -10,18 +10,25 @@ DROP TABLE IF EXISTS titles;
 CREATE TABLE departments (
     dept_no character varying(20) NOT NULL,
     dept_name character varying(50) NOT NULL
+	Primary Key (dept_no)
 );
 
 --Create table for Dept Emp
 CREATE TABLE dept_emp (
     emp_no integer NOT NULL,
     dept_no character varying(10) NOT NULL
+	PRIMARY KEY (emp_no,dept_no),
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
 --Create table for Dept Manager
 CREATE TABLE dept_manager (
     dept_no character varying(10) NOT NULL,
     emp_no integer NOT NULL
+	PRIMARY KEY (dept_no,emp_no),
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
+	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
 --Create table for Employees
@@ -33,19 +40,22 @@ CREATE TABLE employees (
   last_name character varying(45) NOT NULL,
   sex character varying(1),
   hire_date date DEFAULT ('now'::text)::date NOT NULL
+  PRIMARY KEY (emp_no)
 );
 
 --Create table for salaries
 CREATE TABLE salaries (
     emp_no integer NOT NULL,
     salary integer NOT NULL
--- 	salary boolean NOT NULL
+	PRIMARY KEY (emp_no),
+	FOREIGN KEY (emp_no) REFERENCES employees(emp_no)
 );
 
 --Create table for titles
 CREATE TABLE titles (
     title_id character varying(10) NOT NULL,
     title character varying(50) NOT NULL
+	PRIMARY KEY (title_id)
 );
 
 select *
